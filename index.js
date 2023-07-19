@@ -40,7 +40,6 @@ const formatLocationData = (locationData) =>{
             icon
             },
         ]
-
     } = locationData
     //Clear previous data
     form.search.value = ""
