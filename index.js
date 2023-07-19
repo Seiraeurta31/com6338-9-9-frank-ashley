@@ -54,7 +54,7 @@ const formatLocationData = (locationData) =>{
     <br>
     <p>${temp}</p>
     <p>${feels_like}</p>
-    <br>'
+    <br>
     <p>"Last updated: ${timeString(dt)}</p>`
 }
 
