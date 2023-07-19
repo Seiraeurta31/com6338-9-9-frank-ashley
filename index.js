@@ -4,15 +4,14 @@ var form = document.querySelector('form')
 form.onsubmit = function(e) {
     e.preventDefault()
     var userInput = this.search.value.trim()
-    form.search.value = ""
-    
+
     if(!userInput) {
+        form.search.value = "" 
         return
     }
         
     fetch('https://api.openweathermap.org/data/2.5/weather?q=' + userInput + '&units=imperial&appid=08ace7633004d5ddf370678a8c052e90')
     .then(function(res){
-        form.search.value = ""
         return res.json()    
     })
     .then(formatLocationData)
