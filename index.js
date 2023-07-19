@@ -1,27 +1,23 @@
-var weatherDisplay = document.getElementById('weather')
-var form = document.querySelector('form')
+const weatherDisplay = document.getElementById('weather')
+const form = document.querySelector('form')
 
-form.onsubmit = function(e) {
+form.onsubmit = async function(e) {
     e.preventDefault()
-    var userInput = this.search.value.trim()
+    const userInput = this.search.value.trim()
+    console.log(userInput)
 
-    if(!userInput) {
-        form.search.value = "" 
-        return
-    }
-        
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + userInput + '&units=imperial&appid=08ace7633004d5ddf370678a8c052e90')
-    .then(function(res){
-        return res.json()    
-    })
-    .then(formatLocationData)
-    .catch(function(err){
+    if(!userInput) return
+
+    try{
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=imperial&appid=08ace7633004d5ddf370678a8c052e90`)
+        const weatherData = await res.json()  
+        console.log(weatherData)  
+        formatLocationData(weatherData)
+    } catch(err){
         form.search.value = ""
         weatherDisplay.innerHTML = ""
-        var errorMessage = document.createElement('h2')
-        errorMessage.textContent = "Location not found"
-        weatherDisplay.appendChild(errorMessage)
-    })   
+        weatherDisplay.innerHTML = `<h2>${'location not found'}</h2>`
+    }   
 }
 
 
