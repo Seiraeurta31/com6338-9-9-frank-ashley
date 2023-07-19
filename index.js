@@ -34,66 +34,35 @@ const formatLocationData = (locationData) =>{
         main: {
             temp,
             feels_like
-        },
+        }, 
         weather: [{
             description,
             icon
             },
         ]
     } = locationData
+
     //Clear previous data
     form.search.value = ""
     weatherDisplay.innerHTML = ""
     
-    //City/Country 
-    var cityName = document.createElement('h2')
-    cityName.textContent = name + ", " + country
-    console.log(cityName)
-    weatherDisplay.appendChild(cityName)
+    weatherDisplay.innerHTML = 
+    `<h2>${name}, ${country}</h2>
+    <a href = "https://www.google.com/maps/search/?api=1&query=${lat},${lon}" target = "_BLANK">Click to view map</a>
+    <img src = "https://openweathermap.org/img/wn/${icon}@2x.png">
+    <p>${description}</p>
+    <br>
+    <p>${temp}</p>
+    <p>${feels_like}</p>
+    <br>'
+    <p>"Last updated: ${timeString(dt)}</p>`
+}
 
-    //Map Link 
-    var mapLink = document.createElement('a')
-    mapLink.textContent = "Click to view map"
-    var latitude = lat
-    var longitude = lon
-    mapLink.href = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude 
-    mapLink.setAttribute('target', '_BLANK')
-    weatherDisplay.appendChild(mapLink)
-
-    //Weather Icon 
-    var weatherIcon = document.createElement('img')
-    var iconCode = icon
-    weatherIcon.src = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png"
-    weatherDisplay.appendChild(weatherIcon)
-
-    //Weather Description
-    var weatherDescription = document.createElement('p')
-    weatherDescription.style.textTransform = "capitalize"
-    weatherDescription.textContent = description
-    weatherDisplay.appendChild(weatherDescription)
-
-    weatherDisplay.appendChild(document.createElement('br'))
-
-    //Current Temp
-    var currentTemp = document.createElement('p') 
-    currentTemp.textContent = "Current: " + (temp).toFixed(2) + "° F"
-    weatherDisplay.appendChild(currentTemp)
-
-    // //Feels Like Temp
-    var feelLikeTemp = document.createElement('p') 
-    feelLikeTemp.textContent = "Feels like: " + (feels_like).toFixed(2) + "° F"
-    weatherDisplay.appendChild(feelLikeTemp)
-
-    weatherDisplay.appendChild(document.createElement('br'))
-
-    // //TimeStamp
-    var timeStamp = document.createElement('p')
-    var date = new Date((dt)*1000)
-    var timeString = date.toLocaleTimeString('en-US', {
+const timeString = (dt) =>{
+    const date = new Date((dt)*1000)
+    const timeString = date.toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit'
-    }) 
-    timeStamp.textContent = "Last updated: " + timeString
-    weatherDisplay.appendChild(timeStamp)
-
-}
+    })
+    return timeString
+}       
